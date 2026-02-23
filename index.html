@@ -1,0 +1,2868 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miru Mushrooms — Creating Successful Farmers in Rwanda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --cream: #f5efe0;
+        --warm-white: #faf7f2;
+        --earth: #3d2b1f;
+        --mushroom: #8b6b4a;
+        --sage: #6b7c5c;
+        --moss: #4a5e3a;
+        --gold: #c8a96e;
+        --terracotta: #b5622a;
+        --mist: #d4cabc;
+        --charcoal: #2a2218;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Cormorant Garamond", serif;
+        background: var(--warm-white);
+        color: var(--earth);
+        overflow-x: hidden;
+      }
+
+      /* GRAIN OVERLAY */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.5rem 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.4s ease;
+        mix-blend-mode: normal;
+      }
+
+      nav.scrolled {
+        background: rgba(245, 239, 224, 0.92);
+        backdrop-filter: blur(12px);
+        padding: 1rem 4rem;
+        border-bottom: 1px solid var(--mist);
+      }
+
+      .nav-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        color: var(--earth);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-logo .logo-mark {
+        width: 32px;
+        height: 32px;
+        background: var(--moss);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+        align-items: center;
+      }
+
+      .nav-links a {
+        font-family: "Syne", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--earth);
+        text-decoration: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+
+      .nav-links a:hover {
+        opacity: 1;
+      }
+
+      .nav-cta {
+        font-family: "Syne", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--earth);
+        color: var(--cream);
+        border: none;
+        padding: 0.75rem 1.75rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .nav-cta:hover {
+        background: var(--moss);
+        transform: translateY(-1px);
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-left {
+        background: var(--earth);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10rem 5rem 6rem 6rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-left::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        left: -100px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(107, 124, 92, 0.3) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .hero-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.2s;
+      }
+
+      .hero-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3.5rem, 6vw, 6rem);
+        font-weight: 300;
+        line-height: 1;
+        color: var(--cream);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.4s;
+      }
+
+      .hero-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .hero-sub {
+        font-size: 1.2rem;
+        font-weight: 300;
+        line-height: 1.7;
+        color: var(--mist);
+        max-width: 400px;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.6s;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.8s;
+      }
+
+      .btn-primary {
+        font-family: "Syne", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--gold);
+        color: var(--earth);
+        border: none;
+        padding: 1rem 2.5rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary:hover {
+        background: var(--cream);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn-ghost {
+        font-family: "Syne", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--mist);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(212, 202, 188, 0.4);
+        padding-bottom: 2px;
+        transition: all 0.2s;
+      }
+
+      .btn-ghost:hover {
+        color: var(--cream);
+        border-color: var(--cream);
+      }
+
+      .hero-right {
+        background: var(--cream);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Large decorative mushroom SVG */
+      .hero-visual {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeIn 1.2s ease forwards 0.6s;
+      }
+
+      .mushroom-art {
+        width: 85%;
+        max-width: 500px;
+        height: auto;
+      }
+
+      .hero-stat-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem 3rem;
+        background: rgba(61, 43, 31, 0.06);
+        backdrop-filter: blur(4px);
+        border-top: 1px solid var(--mist);
+        display: flex;
+        gap: 3rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 1s;
+      }
+
+      .hero-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .hero-stat .num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--mushroom);
+        line-height: 1;
+      }
+
+      .hero-stat .label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--earth);
+        opacity: 0.6;
+      }
+
+      /* TICKER */
+      .ticker {
+        background: var(--moss);
+        padding: 0.75rem 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .ticker-inner {
+        display: flex;
+        gap: 4rem;
+        animation: ticker 30s linear infinite;
+        white-space: nowrap;
+      }
+
+      .ticker-item {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(250, 247, 242, 0.7);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .ticker-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+
+      @keyframes ticker {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 8rem 0;
+      }
+
+      .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 4rem;
+      }
+
+      .section-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mushroom);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .section-label::before {
+        content: "";
+        width: 2rem;
+        height: 1px;
+        background: var(--mushroom);
+        display: block;
+      }
+
+      .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.5rem, 4vw, 4rem);
+        font-weight: 300;
+        line-height: 1.1;
+        color: var(--earth);
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title em {
+        font-style: italic;
+        color: var(--mushroom);
+      }
+
+      /* PHILOSOPHY SECTION */
+      .philosophy {
+        background: var(--warm-white);
+        overflow: hidden;
+      }
+
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+
+      .philosophy-text p {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: var(--earth);
+        opacity: 0.85;
+        margin-bottom: 1.5rem;
+      }
+
+      .pull-quote {
+        border-left: 3px solid var(--gold);
+        padding-left: 2rem;
+        margin: 3rem 0;
+        font-size: 1.5rem;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.5;
+        color: var(--earth);
+      }
+
+      .philosophy-visual {
+        position: relative;
+        height: 600px;
+      }
+
+      .philosophy-card {
+        position: absolute;
+        background: var(--earth);
+        color: var(--cream);
+        padding: 3rem;
+        width: 320px;
+      }
+
+      .philosophy-card:nth-child(1) {
+        top: 0;
+        right: 0;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .philosophy-card:nth-child(2) {
+        bottom: 60px;
+        left: 0;
+        background: var(--sage);
+        animation: float 6s ease-in-out infinite 2s;
+      }
+
+      .philosophy-card:nth-child(3) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--cream);
+        color: var(--earth);
+        border: 1px solid var(--mist);
+        animation: float 6s ease-in-out infinite 4s;
+        width: 200px;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .philosophy-card .card-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 4rem;
+        font-weight: 300;
+        line-height: 1;
+        opacity: 0.3;
+        margin-bottom: 0.5rem;
+        color: var(--gold);
+      }
+
+      .philosophy-card .card-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+      }
+
+      .philosophy-card .card-body {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        opacity: 0.8;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+
+      /* PROBLEM/SOLUTION */
+      .cycle-section {
+        background: var(--earth);
+        color: var(--cream);
+        overflow: hidden;
+      }
+
+      .cycle-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+
+      .cycle-block {
+        position: relative;
+      }
+
+      .cycle-block .cycle-header {
+        font-family: "Syne", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        padding: 0.5rem 1rem;
+        display: inline-block;
+      }
+
+      .cycle-block.bad .cycle-header {
+        background: rgba(181, 98, 42, 0.3);
+        color: var(--terracotta);
+      }
+
+      .cycle-block.good .cycle-header {
+        background: rgba(74, 94, 58, 0.3);
+        color: #8fcb6a;
+      }
+
+      .cycle-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .cycle-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid rgba(212, 202, 188, 0.1);
+        position: relative;
+      }
+
+      .step-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--gold);
+        min-width: 2rem;
+        padding-top: 0.2rem;
+      }
+
+      .step-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        opacity: 0.85;
+      }
+
+      .step-text strong {
+        display: block;
+        font-family: "Syne", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        opacity: 1;
+        color: var(--cream);
+      }
+
+      .vs-divider {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 5rem;
+        font-weight: 300;
+        color: rgba(212, 202, 188, 0.1);
+        pointer-events: none;
+      }
+
+      /* PRODUCTS */
+      .products {
+        background: var(--cream);
+      }
+
+      .products-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 5rem;
+        align-items: end;
+      }
+
+      .products-intro {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        opacity: 0.8;
+      }
+
+      .tube-highlight {
+        background: var(--earth);
+        color: var(--cream);
+        padding: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tube-highlight::before {
+        content: "🍄";
+        position: absolute;
+        top: -1rem;
+        right: -1rem;
+        font-size: 8rem;
+        opacity: 0.06;
+      }
+
+      .tube-specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .spec-item {
+        border-top: 1px solid rgba(212, 202, 188, 0.2);
+        padding-top: 1rem;
+      }
+
+      .spec-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.4rem;
+      }
+
+      .spec-value {
+        font-size: 1rem;
+        font-weight: 300;
+      }
+
+      .pricing-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin-top: 4rem;
+        background: var(--mist);
+      }
+
+      .pricing-card {
+        background: var(--warm-white);
+        padding: 3rem 2.5rem;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .pricing-card:hover {
+        background: var(--earth);
+        color: var(--cream);
+        transform: translateY(-4px);
+        z-index: 2;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      }
+
+      .pricing-card.featured {
+        background: var(--earth);
+        color: var(--cream);
+      }
+
+      .pricing-tier {
+        font-family: "Syne", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+
+      .pricing-amount {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3rem;
+        font-weight: 300;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+
+      .pricing-unit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        color: var(--mushroom);
+        margin-bottom: 2rem;
+      }
+
+      .pricing-card.featured .pricing-unit {
+        color: var(--mist);
+      }
+      .pricing-card:hover .pricing-unit {
+        color: var(--mist);
+      }
+
+      .pricing-features {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .pricing-features li {
+        font-size: 0.95rem;
+        opacity: 0.85;
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+
+      .pricing-features li::before {
+        content: "✓";
+        color: var(--gold);
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+
+      /* ROI SECTION */
+      .roi-section {
+        background: var(--sage);
+        color: var(--cream);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .roi-section::before {
+        content: "";
+        position: absolute;
+        bottom: -100px;
+        right: -100px;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(74, 94, 58, 0.6) 0%,
+          transparent 70%
+        );
+      }
+
+      .roi-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 6rem;
+        align-items: center;
+      }
+
+      .roi-numbers {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .roi-num-card {
+        background: rgba(61, 43, 31, 0.3);
+        padding: 2.5rem 2rem;
+        text-align: center;
+      }
+
+      .roi-big {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3.5rem;
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+
+      .roi-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        opacity: 0.7;
+      }
+
+      .roi-text .section-title {
+        color: var(--cream);
+      }
+      .roi-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        opacity: 0.85;
+        margin-bottom: 1.5rem;
+      }
+
+      /* SUPPORT JOURNEY */
+      .journey {
+        background: var(--warm-white);
+        overflow: hidden;
+      }
+
+      .journey-timeline {
+        margin-top: 4rem;
+        position: relative;
+      }
+
+      .journey-timeline::before {
+        content: "";
+        position: absolute;
+        left: 140px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--mist);
+      }
+
+      .journey-step {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 3rem;
+        margin-bottom: 4rem;
+        position: relative;
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.6s ease;
+      }
+
+      .journey-step.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .journey-time {
+        text-align: right;
+        padding-right: 3rem;
+        position: relative;
+      }
+
+      .journey-time::after {
+        content: "";
+        position: absolute;
+        right: -5px;
+        top: 8px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--gold);
+        border: 2px solid var(--warm-white);
+      }
+
+      .time-period {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mushroom);
+        margin-bottom: 0.25rem;
+      }
+
+      .time-label {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        font-style: italic;
+        color: var(--earth);
+        opacity: 0.6;
+      }
+
+      .journey-content {
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--mist);
+      }
+
+      .journey-content h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--earth);
+      }
+
+      .journey-content p {
+        font-size: 1rem;
+        line-height: 1.7;
+        opacity: 0.75;
+        margin-bottom: 1rem;
+      }
+
+      .journey-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: var(--mist);
+        color: var(--earth);
+        padding: 0.4rem 0.8rem;
+      }
+
+      /* GROWTH */
+      .growth-section {
+        background: var(--charcoal);
+        color: var(--cream);
+        overflow: hidden;
+      }
+
+      .growth-chart {
+        margin-top: 4rem;
+        position: relative;
+      }
+
+      .growth-milestones {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0;
+        margin-top: 3rem;
+      }
+
+      .milestone {
+        padding: 2rem 1.5rem;
+        border-left: 1px solid rgba(212, 202, 188, 0.15);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .milestone:hover {
+        background: rgba(200, 169, 110, 0.05);
+      }
+
+      .milestone-date {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+
+      .milestone-farmers {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3rem;
+        font-weight: 300;
+        color: var(--cream);
+        line-height: 1;
+        margin-bottom: 0.3rem;
+      }
+
+      .milestone-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.5;
+        margin-bottom: 1.5rem;
+      }
+
+      .milestone-detail {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        opacity: 0.6;
+      }
+
+      .milestone-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--gold), var(--moss));
+        transition: width 1s ease;
+      }
+
+      /* TESTIMONIALS */
+      .testimonials {
+        background: var(--cream);
+        overflow: hidden;
+      }
+
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin-top: 4rem;
+        background: var(--mist);
+      }
+
+      .testimonial-card {
+        background: var(--warm-white);
+        padding: 3rem 2.5rem;
+        transition: background 0.3s ease;
+      }
+
+      .testimonial-card:hover {
+        background: var(--earth);
+      }
+      .testimonial-card:hover * {
+        color: var(--cream) !important;
+        opacity: 1 !important;
+      }
+
+      .testimonial-quote {
+        font-size: 1.15rem;
+        font-weight: 300;
+        line-height: 1.7;
+        font-style: italic;
+        margin-bottom: 2rem;
+        color: var(--earth);
+      }
+
+      .testimonial-author {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        border-top: 1px solid var(--mist);
+        padding-top: 1.5rem;
+      }
+
+      .author-name {
+        font-family: "Syne", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--earth);
+      }
+
+      .author-detail {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--mushroom);
+      }
+
+      /* CTA */
+      .final-cta {
+        background: var(--moss);
+        color: var(--cream);
+        padding: 8rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .final-cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 60px,
+          rgba(255, 255, 255, 0.02) 60px,
+          rgba(255, 255, 255, 0.02) 61px
+        );
+      }
+
+      .final-cta .section-title {
+        color: var(--cream);
+        font-size: clamp(3rem, 5vw, 5rem);
+        margin-bottom: 1.5rem;
+      }
+
+      .final-cta p {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        max-width: 500px;
+        margin: 0 auto 3rem;
+        line-height: 1.7;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--charcoal);
+        color: var(--cream);
+        padding: 4rem 0 2rem;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 4rem;
+      }
+
+      .footer-brand .logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-brand p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        opacity: 0.6;
+        max-width: 280px;
+      }
+
+      .footer-col h4 {
+        font-family: "Syne", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .footer-col ul li a {
+        font-size: 0.9rem;
+        opacity: 0.6;
+        color: var(--cream);
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+
+      .footer-col ul li a:hover {
+        opacity: 1;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(212, 202, 188, 0.1);
+        padding-top: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-bottom p {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        opacity: 0.4;
+      }
+
+      /* MOBILE MENU */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0.5rem;
+      }
+
+      .menu-toggle span {
+        width: 24px;
+        height: 2px;
+        background: var(--earth);
+        display: block;
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.7s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* MOBILE */
+      @media (max-width: 968px) {
+        nav {
+          padding: 1.2rem 2rem;
+        }
+        nav.scrolled {
+          padding: 0.8rem 2rem;
+        }
+
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+        .menu-toggle {
+          display: flex;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+        .hero-left {
+          padding: 8rem 2rem 4rem;
+        }
+        .hero-right {
+          height: 50vw;
+          min-height: 300px;
+        }
+        .hero-stat-bar {
+          gap: 1.5rem;
+          padding: 1.5rem 2rem;
+          flex-wrap: wrap;
+        }
+
+        .philosophy-grid,
+        .cycle-grid,
+        .roi-grid,
+        .products-header {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+
+        .philosophy-visual {
+          height: 400px;
+        }
+        .pricing-cards {
+          grid-template-columns: 1fr;
+        }
+        .testimonials-grid {
+          grid-template-columns: 1fr;
+        }
+        .growth-milestones {
+          grid-template-columns: 1fr 1fr;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+        }
+
+        .container {
+          padding: 0 2rem;
+        }
+        section {
+          padding: 5rem 0;
+        }
+
+        .journey-timeline::before {
+          left: 0;
+        }
+        .journey-step {
+          grid-template-columns: 1fr;
+        }
+        .journey-time {
+          text-align: left;
+          padding-right: 0;
+        }
+        .journey-time::after {
+          right: auto;
+          left: -5px;
+        }
+        .journey-timeline::before {
+          left: -2px;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+        }
+      }
+
+      /* WHATSAPP FAB */
+      .whatsapp-fab {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 56px;
+        height: 56px;
+        background: #25d366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        text-decoration: none;
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+        transition: transform 0.2s, box-shadow 0.2s;
+        animation: fadeIn 0.5s ease forwards 2s;
+        opacity: 0;
+      }
+
+      .whatsapp-fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+      }
+
+      .whatsapp-fab svg {
+        width: 28px;
+        height: 28px;
+        fill: white;
+      }
+
+      /* BADGE */
+      .badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: rgba(200, 169, 110, 0.2);
+        color: var(--gold);
+        border: 1px solid rgba(200, 169, 110, 0.4);
+        padding: 0.3rem 0.8rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+
+      /* SYSTEM SECTION */
+      .system-section {
+        background: var(--warm-white);
+        overflow: hidden;
+      }
+
+      .system-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+        margin-top: 4rem;
+      }
+
+      .system-card {
+        padding: 3rem;
+        border: 1px solid var(--mist);
+        position: relative;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .system-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--earth);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+        z-index: 0;
+      }
+
+      .system-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .system-card > * {
+        position: relative;
+        z-index: 1;
+      }
+      .system-card:hover {
+        color: var(--cream);
+        border-color: var(--earth);
+      }
+      .system-card:hover .system-label {
+        color: var(--gold);
+      }
+      .system-card:hover .system-body {
+        color: rgba(250, 247, 242, 0.8);
+      }
+
+      .system-icon {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .system-label {
+        font-family: "Syne", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mushroom);
+        margin-bottom: 0.5rem;
+        transition: color 0.3s;
+      }
+
+      .system-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        transition: color 0.3s;
+      }
+
+      .system-body {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        opacity: 0.75;
+        transition: color 0.3s;
+      }
+
+      .agent-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1.5rem;
+      }
+
+      .agent-chip {
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.7rem;
+        background: rgba(200, 169, 110, 0.15);
+        color: var(--gold);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+
+      .system-card:hover .agent-chip {
+        background: rgba(200, 169, 110, 0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav id="nav">
+      <a href="#" class="nav-logo">
+        <div class="logo-mark">🍄</div>
+        Miru
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="#growth">Growth</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Start Farming</a>
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-left">
+        <span class="hero-eyebrow">Kigali, Rwanda · Est. 2026</span>
+        <h1 class="hero-title">
+          Creating<br /><em>Successful</em><br />Mushroom<br />Farmers
+        </h1>
+        <p class="hero-sub">
+          Rwanda's #1 mushroom production company. We don't sell tubes — we
+          build farmer success ecosystems that compound.
+        </p>
+        <div class="hero-actions">
+          <a href="#products" class="btn-primary">Explore Packages</a>
+          <a href="#support" class="btn-ghost">See How It Works</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-visual">
+          <svg
+            class="mushroom-art"
+            viewBox="0 0 400 500"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- Stem -->
+            <rect
+              x="170"
+              y="280"
+              width="60"
+              height="160"
+              rx="8"
+              fill="#8B6B4A"
+              opacity="0.6"
+            />
+            <rect
+              x="178"
+              y="280"
+              width="20"
+              height="160"
+              rx="4"
+              fill="#C8A96E"
+              opacity="0.3"
+            />
+
+            <!-- Cap main -->
+            <ellipse cx="200" cy="230" rx="160" ry="80" fill="#4A5E3A" />
+            <ellipse cx="200" cy="215" rx="155" ry="75" fill="#6B7C5C" />
+
+            <!-- Cap highlight -->
+            <ellipse
+              cx="180"
+              cy="195"
+              rx="80"
+              ry="35"
+              fill="#8B9E7A"
+              opacity="0.5"
+            />
+
+            <!-- Spots -->
+            <circle cx="160" cy="195" r="22" fill="#F5EFE0" opacity="0.7" />
+            <circle cx="220" cy="185" r="16" fill="#F5EFE0" opacity="0.6" />
+            <circle cx="130" cy="215" r="12" fill="#F5EFE0" opacity="0.5" />
+            <circle cx="270" cy="200" r="18" fill="#F5EFE0" opacity="0.6" />
+            <circle cx="250" cy="225" r="10" fill="#F5EFE0" opacity="0.4" />
+
+            <!-- Small mushrooms -->
+            <rect
+              x="70"
+              y="370"
+              width="25"
+              height="70"
+              rx="4"
+              fill="#8B6B4A"
+              opacity="0.4"
+            />
+            <ellipse
+              cx="82"
+              cy="360"
+              rx="50"
+              ry="28"
+              fill="#4A5E3A"
+              opacity="0.7"
+            />
+            <ellipse
+              cx="82"
+              cy="353"
+              rx="46"
+              ry="24"
+              fill="#6B7C5C"
+              opacity="0.7"
+            />
+            <circle cx="75" cy="350" r="8" fill="#F5EFE0" opacity="0.5" />
+            <circle cx="95" cy="348" r="6" fill="#F5EFE0" opacity="0.5" />
+
+            <rect
+              x="305"
+              y="380"
+              width="20"
+              height="60"
+              rx="4"
+              fill="#8B6B4A"
+              opacity="0.4"
+            />
+            <ellipse
+              cx="315"
+              cy="372"
+              rx="40"
+              ry="22"
+              fill="#4A5E3A"
+              opacity="0.7"
+            />
+            <ellipse
+              cx="315"
+              cy="366"
+              rx="37"
+              ry="19"
+              fill="#6B7C5C"
+              opacity="0.7"
+            />
+            <circle cx="310" cy="363" r="7" fill="#F5EFE0" opacity="0.5" />
+
+            <!-- Ground -->
+            <ellipse
+              cx="200"
+              cy="445"
+              rx="170"
+              ry="20"
+              fill="#3D2B1F"
+              opacity="0.08"
+            />
+
+            <!-- Glow -->
+            <ellipse
+              cx="200"
+              cy="230"
+              rx="160"
+              ry="80"
+              fill="url(#glow)"
+              opacity="0.3"
+            />
+            <defs>
+              <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#C8A96E" stop-opacity="0.6" />
+                <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="hero-stat-bar">
+          <div class="hero-stat">
+            <span class="num">&lt;3%</span>
+            <span class="label">Contamination Rate</span>
+          </div>
+          <div class="hero-stat">
+            <span class="num">400%+</span>
+            <span class="label">Farmer ROI</span>
+          </div>
+          <div class="hero-stat">
+            <span class="num">3,200</span>
+            <span class="label">Farmers by 2030</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker">
+      <div class="ticker-inner" id="ticker">
+        <!-- Items duplicated for seamless loop -->
+        <span class="ticker-item"
+          >Premium Oyster Mushroom Tubes <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >100% Colonization Guarantee <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >400–567% ROI per Tube <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >WhatsApp Support Community <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Free Market Access Facilitation <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Rwanda's #1 Mushroom Company <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Contamination Replacement Guarantee <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >2.5 kg Substrate per Tube <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Premium Oyster Mushroom Tubes <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >100% Colonization Guarantee <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >400–567% ROI per Tube <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >WhatsApp Support Community <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Free Market Access Facilitation <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Rwanda's #1 Mushroom Company <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >Contamination Replacement Guarantee <span class="ticker-dot"></span
+        ></span>
+        <span class="ticker-item"
+          >2.5 kg Substrate per Tube <span class="ticker-dot"></span
+        ></span>
+      </div>
+    </div>
+
+    <!-- PHILOSOPHY -->
+    <section class="philosophy" id="about">
+      <div class="container">
+        <div class="philosophy-grid">
+          <div class="philosophy-text">
+            <div class="section-label reveal">Our Philosophy</div>
+            <h2 class="section-title reveal">
+              We are not a<br /><em>tube supplier</em>
+            </h2>
+            <div class="pull-quote reveal">
+              "Our competitive advantage isn't just selling tubes — it's
+              creating successful mushroom farmers."
+            </div>
+            <p class="reveal">
+              Most mushroom suppliers focus on the transaction: sell tubes,
+              collect payment, move on. This creates a vicious cycle where
+              farmers struggle alone, fail, and spread skepticism across the
+              market.
+            </p>
+            <p class="reveal">
+              Miru Mushrooms breaks this cycle by investing deeply in every
+              farmer's success. When we make farmers successful, they become our
+              most powerful marketing engine — generating 3–5 referrals each,
+              creating a compounding growth loop that competitors can never
+              replicate.
+            </p>
+            <p class="reveal">
+              We apply Aletheia's multi-agent systematic excellence to every
+              aspect of our operation — from 7-checkpoint production quality
+              control to our 5-agent marketing system — building the operational
+              DNA that compounds in our favor every single day.
+            </p>
+          </div>
+
+          <div class="philosophy-visual">
+            <div class="philosophy-card">
+              <div class="card-num">01</div>
+              <div class="card-title">Farmer Success First</div>
+              <div class="card-body">
+                Every decision is evaluated through one lens: does this help our
+                farmers thrive?
+              </div>
+            </div>
+            <div class="philosophy-card">
+              <div class="card-num">02</div>
+              <div class="card-title">Radical Transparency</div>
+              <div class="card-body">
+                We show everything — our process, our challenges, our farmer
+                results. Trust is built through openness.
+              </div>
+            </div>
+            <div class="philosophy-card">
+              <div class="card-num">03</div>
+              <div class="card-title">&lt;3%</div>
+              <div
+                class="card-body"
+                style="
+                  font-family: 'Syne', sans-serif;
+                  font-size: 0.75rem;
+                  font-weight: 600;
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                "
+              >
+                Contamination Rate<br /><span
+                  style="font-weight: 400; opacity: 0.7; text-transform: none"
+                  >vs industry 15–20%</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM VS SOLUTION -->
+    <section class="cycle-section">
+      <div class="container">
+        <div class="section-label reveal" style="color: var(--mist)">
+          Why Miru Wins
+        </div>
+        <h2 class="section-title reveal" style="color: var(--cream)">
+          Two different <em>games</em>
+        </h2>
+        <br /><br />
+        <div class="cycle-grid">
+          <div class="cycle-block bad reveal">
+            <div class="cycle-header">❌ Competitor Model</div>
+            <div class="cycle-steps">
+              <div class="cycle-step">
+                <div class="step-num">01</div>
+                <div class="step-text">
+                  <strong>Sell Tubes</strong>Farmer receives product with
+                  minimal guidance
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">02</div>
+                <div class="step-text">
+                  <strong>Minimal Support</strong>Farmer navigates problems
+                  alone
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">03</div>
+                <div class="step-text">
+                  <strong>Mixed Results</strong>Contamination, low yields,
+                  confusion
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">04</div>
+                <div class="step-text">
+                  <strong>Find New Customer</strong>Constant, expensive
+                  acquisition with no referrals
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background: rgba(181, 98, 42, 0.15);
+                border-left: 3px solid var(--terracotta);
+              "
+            >
+              <div
+                style="
+                  font-family: 'DM Mono', monospace;
+                  font-size: 0.6rem;
+                  letter-spacing: 0.12em;
+                  text-transform: uppercase;
+                  color: var(--terracotta);
+                  margin-bottom: 0.5rem;
+                "
+              >
+                Result
+              </div>
+              <div style="font-size: 0.95rem; opacity: 0.7">
+                CAC constant · LTV: 1 purchase · Linear, expensive growth
+              </div>
+            </div>
+          </div>
+
+          <div class="cycle-block good reveal">
+            <div class="cycle-header">✓ Miru Model</div>
+            <div class="cycle-steps">
+              <div class="cycle-step">
+                <div class="step-num">01</div>
+                <div class="step-text">
+                  <strong>Partner with Farmer</strong>Full onboarding, setup
+                  verification, WhatsApp community
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">02</div>
+                <div class="step-text">
+                  <strong>Ensure Their Success</strong>Daily support through
+                  colonization, harvest, and beyond
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">03</div>
+                <div class="step-text">
+                  <strong>Farmer Thrives</strong>400–567% ROI, market
+                  connections, growing income
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">04</div>
+                <div class="step-text">
+                  <strong>Farmer Tells Others</strong>3–5 referrals generated
+                  organically per farmer
+                </div>
+              </div>
+              <div class="cycle-step">
+                <div class="step-num">05</div>
+                <div class="step-text">
+                  <strong>Cycle Compounds</strong>Repeat purchases + referral
+                  chain · momentum builds
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background: rgba(74, 94, 58, 0.3);
+                border-left: 3px solid #8fcb6a;
+              "
+            >
+              <div
+                style="
+                  font-family: 'DM Mono', monospace;
+                  font-size: 0.6rem;
+                  letter-spacing: 0.12em;
+                  text-transform: uppercase;
+                  color: #8fcb6a;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                Result
+              </div>
+              <div style="font-size: 0.95rem; opacity: 0.7">
+                CAC drops 5× by Year 3 · LTV: 108,000 RWF · Exponential growth
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products" id="products">
+      <div class="container">
+        <div class="products-header">
+          <div>
+            <div class="section-label reveal">Products & Pricing</div>
+            <h2 class="section-title reveal">
+              Premium Growing<br /><em>Tubes & Ecosystem</em>
+            </h2>
+          </div>
+          <div class="products-intro reveal">
+            Every purchase includes our complete farmer success ecosystem —
+            consultation, onboarding, ongoing support, market connections, and
+            community access. This isn't a product, it's a partnership.
+          </div>
+        </div>
+
+        <!-- Tube specs -->
+        <div class="tube-highlight reveal">
+          <div
+            style="
+              font-family: 'Syne', sans-serif;
+              font-weight: 700;
+              font-size: 1.2rem;
+              margin-bottom: 0.5rem;
+              letter-spacing: 0.05em;
+            "
+          >
+            PREMIUM OYSTER MUSHROOM TUBE
+          </div>
+          <div
+            style="
+              font-family: 'DM Mono', monospace;
+              font-size: 0.7rem;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: var(--gold);
+            "
+          >
+            Production Specifications
+          </div>
+          <div class="tube-specs">
+            <div class="spec-item">
+              <div class="spec-label">Substrate Weight</div>
+              <div class="spec-value">2.5 kg per tube</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Composition</div>
+              <div class="spec-value">
+                75% cottonseed hulls · 20% rice bran · 5% supplements
+              </div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Sterilization</div>
+              <div class="spec-value">121°C for 90+ minutes</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Colonization Time</div>
+              <div class="spec-value">14–21 days</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Expected Yield</div>
+              <div class="spec-value">2–3 kg over 3 months (3–4 flushes)</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Contamination Rate</div>
+              <div class="spec-value">&lt;3% (Industry: 15–20%)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="pricing-cards">
+          <div class="pricing-card reveal">
+            <div class="pricing-tier">Standard</div>
+            <div class="pricing-amount">3,000</div>
+            <div class="pricing-unit">RWF per tube</div>
+            <ul class="pricing-features">
+              <li>Premium oyster mushroom tube</li>
+              <li>Complete growing guide</li>
+              <li>WhatsApp community access</li>
+              <li>Setup verification call</li>
+              <li>Email & WhatsApp support</li>
+              <li>Contamination replacement guarantee</li>
+            </ul>
+            <a
+              href="#contact"
+              class="btn-primary"
+              style="width: 100%; text-align: center; display: block"
+              >Get Started</a
+            >
+          </div>
+
+          <div class="pricing-card featured reveal">
+            <div class="pricing-tier">Bulk · 10+ Tubes</div>
+            <div class="pricing-amount">2,800</div>
+            <div class="pricing-unit">RWF per tube · Save 200 RWF each</div>
+            <ul class="pricing-features">
+              <li>Everything in Standard</li>
+              <li>Priority WhatsApp support group</li>
+              <li>In-person setup visit</li>
+              <li>Market connection assistance</li>
+              <li>Personal harvest timing guidance</li>
+              <li>Success story feature opportunity</li>
+            </ul>
+            <a
+              href="#contact"
+              class="btn-primary"
+              style="
+                background: var(--gold);
+                width: 100%;
+                text-align: center;
+                display: block;
+              "
+              >Most Popular</a
+            >
+          </div>
+
+          <div class="pricing-card reveal">
+            <div class="pricing-tier">Loyalty · Returning Farmers</div>
+            <div class="pricing-amount">2,700</div>
+            <div class="pricing-unit">RWF per tube · Earn as you grow</div>
+            <ul class="pricing-features">
+              <li>Everything in Bulk</li>
+              <li>Referral rewards (1 free tube per referral)</li>
+              <li>Early access to new products</li>
+              <li>Advanced techniques training</li>
+              <li>Top Farmer recognition program</li>
+              <li>Custom scaling consultation</li>
+            </ul>
+            <a
+              href="#contact"
+              class="btn-primary"
+              style="width: 100%; text-align: center; display: block"
+              >Unlock Loyalty</a
+            >
+          </div>
+        </div>
+
+        <!-- ROI callout -->
+        <div
+          style="
+            margin-top: 3rem;
+            padding: 3rem;
+            background: var(--earth);
+            color: var(--cream);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            text-align: center;
+          "
+          class="reveal"
+        >
+          <div>
+            <div
+              style="
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 3.5rem;
+                font-weight: 300;
+                color: var(--gold);
+                line-height: 1;
+              "
+            >
+              15,000
+            </div>
+            <div
+              style="
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-top: 0.5rem;
+              "
+            >
+              Min. Revenue per Tube (RWF)
+            </div>
+          </div>
+          <div>
+            <div
+              style="
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 3.5rem;
+                font-weight: 300;
+                color: var(--gold);
+                line-height: 1;
+              "
+            >
+              400%
+            </div>
+            <div
+              style="
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-top: 0.5rem;
+              "
+            >
+              Minimum ROI over 3 Months
+            </div>
+          </div>
+          <div>
+            <div
+              style="
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 3.5rem;
+                font-weight: 300;
+                color: var(--gold);
+                line-height: 1;
+              "
+            >
+              3–4
+            </div>
+            <div
+              style="
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-top: 0.5rem;
+              "
+            >
+              Mushroom Flushes per Tube
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT JOURNEY -->
+    <section class="journey" id="support">
+      <div class="container">
+        <div class="section-label reveal">Farmer Journey</div>
+        <h2 class="section-title reveal">
+          Your success is our<br /><em>success system</em>
+        </h2>
+        <p
+          class="reveal"
+          style="
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.75;
+            max-width: 600px;
+            margin-bottom: 0;
+          "
+        >
+          Every Miru purchase activates a comprehensive support ecosystem from
+          day zero through ongoing growth — all included at no extra cost.
+        </p>
+
+        <div class="journey-timeline">
+          <div class="journey-step">
+            <div class="journey-time">
+              <div class="time-period">Before</div>
+              <div class="time-label">Pre-Purchase</div>
+            </div>
+            <div class="journey-content">
+              <h3>Free Education & Consultation</h3>
+              <p>
+                Before you spend a single Franc, we equip you with everything
+                you need to make an informed decision. Free consultations via
+                phone, WhatsApp, or in-person. Access to our full growing guide,
+                ROI calculator, and success story library.
+              </p>
+              <div class="journey-tags">
+                <span class="tag">Free Consultation</span>
+                <span class="tag">ROI Calculator</span>
+                <span class="tag">Growing Guide</span>
+                <span class="tag">Success Stories</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="journey-time">
+              <div class="time-period">Days 1–7</div>
+              <div class="time-label">Onboarding</div>
+            </div>
+            <div class="journey-content">
+              <h3>Launch Support</h3>
+              <p>
+                Welcome packet with detailed instructions. Setup verification
+                call or visit. Immediate WhatsApp group access with your cohort.
+                Daily personal check-ins to ensure you're set up for success
+                from the very beginning.
+              </p>
+              <div class="journey-tags">
+                <span class="tag">Welcome Kit</span>
+                <span class="tag">Setup Verification</span>
+                <span class="tag">WhatsApp Group</span>
+                <span class="tag">Daily Check-ins</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="journey-time">
+              <div class="time-period">Days 8–21</div>
+              <div class="time-label">Growing Phase</div>
+            </div>
+            <div class="journey-content">
+              <h3>Contamination Prevention & Growth Guidance</h3>
+              <p>
+                Daily growing tips delivered to your WhatsApp. Expert
+                troubleshooting for any contamination risks. Progress monitoring
+                and peer support from our farmer community. Expert Q&A access
+                for complex issues.
+              </p>
+              <div class="journey-tags">
+                <span class="tag">Daily Tips</span>
+                <span class="tag">Contamination Prevention</span>
+                <span class="tag">Expert Q&A</span>
+                <span class="tag">Community Support</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="journey-time">
+              <div class="time-period">Days 22–45</div>
+              <div class="time-label">Harvest</div>
+            </div>
+            <div class="journey-content">
+              <h3>Market Connection & Harvest Optimization</h3>
+              <p>
+                Harvest timing optimization to maximize yield and quality.
+                Post-harvest care guidance for additional flushes. Direct market
+                connections to restaurants, markets, and buyers. Pricing
+                guidance to ensure you get full value for your harvest.
+              </p>
+              <div class="journey-tags">
+                <span class="tag">Timing Optimization</span>
+                <span class="tag">Market Connections</span>
+                <span class="tag">Pricing Guidance</span>
+                <span class="tag">Additional Flushes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="journey-time">
+              <div class="time-period">Day 46+</div>
+              <div class="time-label">Ongoing Growth</div>
+            </div>
+            <div class="journey-content">
+              <h3>Scale, Refer & Thrive</h3>
+              <p>
+                Loyalty discounts on reorders. Referral rewards — earn one free
+                tube for every farmer you bring in. Advanced techniques
+                training. Recognition in our Top Farmer program. Networking with
+                buyers and fellow farmers. Scaling consultation as your
+                operation grows.
+              </p>
+              <div class="journey-tags">
+                <span class="tag">Loyalty Discounts</span>
+                <span class="tag">Referral Rewards</span>
+                <span class="tag">Advanced Training</span>
+                <span class="tag">Top Farmer Awards</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI SECTION -->
+    <section class="roi-section">
+      <div class="container">
+        <div class="roi-grid">
+          <div class="roi-numbers reveal">
+            <div class="roi-num-card">
+              <div class="roi-big">6–8K</div>
+              <div class="roi-label">RWF per kg Market Price</div>
+            </div>
+            <div class="roi-num-card">
+              <div class="roi-big">2.5kg</div>
+              <div class="roi-label">Conservative Harvest</div>
+            </div>
+            <div class="roi-num-card">
+              <div class="roi-big">567%</div>
+              <div class="roi-label">Max ROI Achievable</div>
+            </div>
+            <div class="roi-num-card">
+              <div class="roi-big">3mo</div>
+              <div class="roi-label">Return Timeline</div>
+            </div>
+          </div>
+
+          <div class="roi-text">
+            <div
+              class="section-label reveal"
+              style="color: rgba(212, 202, 188, 0.6)"
+            >
+              The Numbers
+            </div>
+            <h2 class="section-title reveal">
+              Your investment,<br /><em>multiplied</em>
+            </h2>
+            <p class="reveal">
+              A single 3,000 RWF tube generates 15,000–20,000 RWF in revenue
+              over its 3-month lifecycle — a minimum 400% return before you even
+              factor in repeat flushes and scaling.
+            </p>
+            <p class="reveal">
+              Unlike most agricultural investments, mushroom farming with Miru
+              begins generating returns within 3–4 weeks of setup. Our
+              guaranteed &lt;3% contamination rate means your capital is
+              protected from the start.
+            </p>
+            <p class="reveal">
+              With our market access facilitation, you sell directly to
+              restaurants, markets, and buyers — no middlemen eating your
+              margin. We help you capture full market value for every harvest.
+            </p>
+            <a
+              href="#contact"
+              class="btn-primary reveal"
+              style="background: var(--gold); color: var(--earth)"
+              >Calculate Your Returns</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SYSTEM SECTION -->
+    <section class="system-section">
+      <div class="container">
+        <div class="section-label reveal">The Miru System</div>
+        <h2 class="section-title reveal">
+          Aletheia's multi-agent<br /><em>operational excellence</em>
+        </h2>
+        <p
+          class="reveal"
+          style="
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.75;
+            max-width: 600px;
+          "
+        >
+          We apply systematic, multi-agent excellence to every function —
+          ensuring consistent quality, faster learning, and operational
+          standards that compound over time.
+        </p>
+
+        <div class="system-grid">
+          <div class="system-card reveal">
+            <div class="system-icon">🏭</div>
+            <div class="system-label">7-Agent System</div>
+            <div class="system-title">Production Excellence</div>
+            <div class="system-body">
+              Every tube passes through a 7-checkpoint verification system
+              ensuring our &lt;3% contamination guarantee. Each agent
+              specializes in a critical control point, from substrate
+              preparation to final quality check.
+            </div>
+            <div class="agent-chips">
+              <span class="agent-chip">Planning Agent</span>
+              <span class="agent-chip">Quality Agent</span>
+              <span class="agent-chip">Production Agent</span>
+              <span class="agent-chip">Testing Agent</span>
+              <span class="agent-chip">Optimization Agent</span>
+            </div>
+          </div>
+
+          <div class="system-card reveal">
+            <div class="system-icon">📣</div>
+            <div class="system-label">5-Agent System</div>
+            <div class="system-title">Marketing Engine</div>
+            <div class="system-body">
+              Our 5-agent marketing system produces 196 content pieces in 6
+              months — 52 SEO blogs, 24 YouTube videos, 120 short-form videos —
+              targeting 5,000+ monthly organic visitors and #1 keyword rankings.
+            </div>
+            <div class="agent-chips">
+              <span class="agent-chip">Strategy Agent</span>
+              <span class="agent-chip">Drafting Agent</span>
+              <span class="agent-chip">SEO Agent</span>
+              <span class="agent-chip">Style Agent</span>
+              <span class="agent-chip">Performance Agent</span>
+            </div>
+          </div>
+
+          <div class="system-card reveal">
+            <div class="system-icon">🤝</div>
+            <div class="system-label">Community System</div>
+            <div class="system-title">Farmer Network</div>
+            <div class="system-body">
+              WhatsApp cohort groups, monthly meetups, peer support, market
+              access facilitation, and a referral engine that turns every
+              successful farmer into 3–5 new customers. Community is our
+              compounding moat.
+            </div>
+            <div class="agent-chips">
+              <span class="agent-chip">Cohort Groups</span>
+              <span class="agent-chip">Peer Support</span>
+              <span class="agent-chip">Referral Program</span>
+              <span class="agent-chip">Market Access</span>
+            </div>
+          </div>
+
+          <div class="system-card reveal">
+            <div class="system-icon">📊</div>
+            <div class="system-label">Analytics System</div>
+            <div class="system-title">Data-Driven Operations</div>
+            <div class="system-body">
+              Daily performance tracking, weekly optimization reviews, monthly
+              strategic adjustments, and quarterly goal setting. Every farmer
+              outcome tracked, every marketing channel measured, every process
+              documented and improved.
+            </div>
+            <div class="agent-chips">
+              <span class="agent-chip">Daily Tracking</span>
+              <span class="agent-chip">Weekly Optimization</span>
+              <span class="agent-chip">Monthly Reports</span>
+              <span class="agent-chip">Quarterly Planning</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GROWTH -->
+    <section class="growth-section" id="growth">
+      <div class="container">
+        <div
+          class="section-label reveal"
+          style="color: rgba(212, 202, 188, 0.5)"
+        >
+          Strategic Roadmap
+        </div>
+        <h2 class="section-title reveal" style="color: var(--cream)">
+          The road to<br /><em>Rwanda's #1</em>
+        </h2>
+        <p
+          class="reveal"
+          style="
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(212, 202, 188, 0.7);
+            max-width: 600px;
+          "
+        >
+          Our growth model compounds through farmer success. Each milestone
+          unlocks the next — reducing acquisition costs, increasing referral
+          rates, and building the community moat that makes us unbeatable.
+        </p>
+
+        <div class="growth-milestones">
+          <div class="milestone reveal">
+            <div class="milestone-date">Month 6 · 2026</div>
+            <div class="milestone-farmers">50</div>
+            <div class="milestone-label">Active Farmers</div>
+            <div class="milestone-detail">
+              250 tubes/month · Profitable operations · 60% referral growth
+            </div>
+            <div class="milestone-bar" style="width: 8%"></div>
+          </div>
+          <div class="milestone reveal">
+            <div class="milestone-date">Year 1 · 2027</div>
+            <div class="milestone-farmers">150</div>
+            <div class="milestone-label">Active Farmers</div>
+            <div class="milestone-detail">
+              750 tubes/month · Established Kigali brand · 75% referral growth
+            </div>
+            <div class="milestone-bar" style="width: 20%"></div>
+          </div>
+          <div class="milestone reveal">
+            <div class="milestone-date">Year 2 · 2028</div>
+            <div class="milestone-farmers">400</div>
+            <div class="milestone-label">Active Farmers</div>
+            <div class="milestone-detail">
+              2,000 tubes/month · Kigali market leader · 85% referral growth
+            </div>
+            <div class="milestone-bar" style="width: 45%"></div>
+          </div>
+          <div class="milestone reveal">
+            <div class="milestone-date">Year 3 · 2029</div>
+            <div class="milestone-farmers">900</div>
+            <div class="milestone-label">Active Farmers</div>
+            <div class="milestone-detail">
+              4,500 tubes/month · #1 in Rwanda · 90% referral growth
+            </div>
+            <div class="milestone-bar" style="width: 75%"></div>
+          </div>
+          <div class="milestone reveal">
+            <div class="milestone-date">Year 5 · 2030</div>
+            <div class="milestone-farmers">3,200</div>
+            <div class="milestone-label">Active Farmers</div>
+            <div class="milestone-detail">
+              16,000 tubes/month · Regional expansion ready · Mission achieved
+            </div>
+            <div class="milestone-bar" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="section-label reveal">Farmer Stories</div>
+        <h2 class="section-title reveal">
+          Success is our<br /><em>best marketing</em>
+        </h2>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card reveal">
+            <div class="testimonial-quote">
+              "I was skeptical at first — other suppliers left me to figure
+              things out alone. With Miru, I had someone checking in daily. My
+              first harvest was 2.8 kg from one tube. I immediately ordered 10
+              more."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-name">Agathe M.</div>
+              <div class="author-detail">Gisozi District · 15 tubes active</div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal">
+            <div class="testimonial-quote">
+              "The WhatsApp group alone is worth the investment. When I had a
+              contamination scare at week 2, someone helped me within the hour.
+              They replaced the tube, no questions. This company cares."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-name">Emmanuel K.</div>
+              <div class="author-detail">
+                Nyarugenge · 8 tubes · Referred 4 farmers
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal">
+            <div class="testimonial-quote">
+              "I sold my first harvest directly to two restaurants through
+              Miru's market connections. I made 48,000 RWF in 3 months on 10
+              tubes. My next order is 30 tubes. The ROI is real."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-name">Clarisse U.</div>
+              <div class="author-detail">
+                Kicukiro · Top Farmer Award Q1 2026
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta" id="contact">
+      <div class="container" style="position: relative; z-index: 1">
+        <div class="badge reveal">Start Your Journey</div>
+        <h2 class="section-title reveal">
+          Ready to become a<br /><em>successful farmer?</em>
+        </h2>
+        <p class="reveal">
+          Your first tube is the beginning of a partnership. We guide every step
+          — from setup to harvest to market. Join 50+ farmers already thriving
+          with Miru.
+        </p>
+        <div class="cta-buttons reveal">
+          <a
+            href="https://wa.me/250700000000?text=Hello%20Miru%20Mushrooms!%20I%20want%20to%20start%20farming."
+            class="btn-primary"
+            style="background: var(--gold); color: var(--earth)"
+          >
+            📱 WhatsApp Us Now
+          </a>
+          <a
+            href="mailto:hello@mirumushrooms.rw"
+            class="btn-ghost"
+            style="color: var(--cream); border-color: rgba(250, 247, 242, 0.4)"
+            >hello@mirumushrooms.rw</a
+          >
+        </div>
+
+        <div
+          style="
+            margin-top: 5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+          class="reveal"
+        >
+          <div style="text-align: center">
+            <div
+              style="
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 2.5rem;
+                font-weight: 300;
+                color: var(--gold);
+              "
+            >
+              Free
+            </div>
+            <div
+              style="
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-top: 0.3rem;
+              "
+            >
+              First Consultation
+            </div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 2.5rem;
+                font-weight: 300;
+                color: var(--gold);
+              "
+            >
+              24hr
+            </div>
+            <div
+              style="
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-top: 0.3rem;
+              "
+            >
+              Support Response
+            </div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 2.5rem;
+                font-weight: 300;
+                color: var(--gold);
+              "
+            >
+              100%
+            </div>
+            <div
+              style="
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-top: 0.3rem;
+              "
+            >
+              Colonization Guarantee
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo">🍄 Miru Mushrooms</div>
+            <p>
+              Creating 10,000 successful mushroom farmers across Rwanda by 2030.
+              Proving that profit and purpose are inseparable.
+            </p>
+            <div
+              style="
+                margin-top: 1.5rem;
+                font-family: 'DM Mono', monospace;
+                font-size: 0.6rem;
+                letter-spacing: 0.1em;
+                opacity: 0.4;
+              "
+            >
+              Kigali, Rwanda · Est. 2026<br />
+              Rwanda Development Board Registered
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+              <li><a href="#products">Standard Tube (3,000 RWF)</a></li>
+              <li><a href="#products">Bulk Package (2,800 RWF)</a></li>
+              <li><a href="#products">Loyalty Program (2,700 RWF)</a></li>
+              <li><a href="#products">Partner / Cooperative Pricing</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Farmer Resources</h4>
+            <ul>
+              <li><a href="#">Growing Guide</a></li>
+              <li><a href="#">ROI Calculator</a></li>
+              <li><a href="#">Success Stories</a></li>
+              <li><a href="#">WhatsApp Community</a></li>
+              <li><a href="#">Market Connections</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#about">Our Philosophy</a></li>
+              <li><a href="#growth">Growth Roadmap</a></li>
+              <li><a href="#contact">Contact Us</a></li>
+              <li><a href="#">Blog & Education</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Miru Mushrooms Ltd · All rights reserved</p>
+          <p>Built with Aletheia's multi-agent excellence system</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp FAB -->
+    <a
+      href="https://wa.me/250700000000?text=Hello%20Miru%20Mushrooms!%20I%27m%20interested%20in%20starting%20mushroom%20farming."
+      class="whatsapp-fab"
+      target="_blank"
+      aria-label="Chat on WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+        />
+      </svg>
+    </a>
+
+    <script>
+      // Nav scroll effect
+      const nav = document.getElementById("nav");
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 60);
+      });
+
+      // Intersection observer for reveals
+      const reveals = document.querySelectorAll(".reveal, .journey-step");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      );
+
+      reveals.forEach((el) => observer.observe(el));
+
+      // Stagger reveals
+      document.querySelectorAll(".reveal").forEach((el, i) => {
+        const siblings = el.parentElement?.querySelectorAll(".reveal");
+        let delay = 0;
+        if (siblings) {
+          Array.from(siblings).forEach((sib, j) => {
+            if (sib === el) delay = j * 0.1;
+          });
+        }
+        el.style.transitionDelay = delay + "s";
+      });
+
+      // Mobile menu
+      function toggleMenu() {
+        const links = document.querySelector(".nav-links");
+        const cta = document.querySelector("nav .nav-cta");
+        if (links.style.display === "flex") {
+          links.style.display = "none";
+          if (cta) cta.style.display = "none";
+        } else {
+          links.style.cssText =
+            "display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--cream);padding:2rem;gap:1.5rem;border-bottom:1px solid var(--mist);";
+          if (cta) cta.style.display = "block";
+        }
+      }
+
+      // Milestone bar animation
+      const milestoneObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const bar = entry.target.querySelector(".milestone-bar");
+              if (bar) {
+                const targetWidth = bar.style.width;
+                bar.style.width = "0";
+                setTimeout(() => {
+                  bar.style.width = targetWidth;
+                }, 200);
+              }
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      document
+        .querySelectorAll(".milestone")
+        .forEach((el) => milestoneObserver.observe(el));
+
+      // Smooth anchor scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // Parallax on hero text
+      window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        const heroLeft = document.querySelector(".hero-left");
+        if (heroLeft && scrolled < window.innerHeight) {
+          heroLeft.style.transform = `translateY(${scrolled * 0.15}px)`;
+        }
+      });
+    </script>
+  </body>
+</html>
